@@ -1,0 +1,21 @@
+.basic-info{
+    width: 100%;
+    margin: auto;
+}
+.label{
+    width: 100px;
+    text-align: right;
+}
+#editor {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+}
+
+.ace_autocomplete {
+    width: 400px;
+}

@@ -4,6 +4,7 @@ import "common/common.css";
 import "./save.css";
 import scriptEditor from "../utils/script-editor";
 
+
 window.dataAccessesType = [
     {text: "只能操作自己创建的数据", id: "OWN_CREATED"},
     // {text: "脚本", id: "SCRIPT"},
