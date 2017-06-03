@@ -67,7 +67,7 @@ function loadData(id) {
             new mini.Form("#basic-info").setData(response.result);
             mini.getbyName("id").setReadOnly(true);
             mini.get('action-grid').setData(response.result.actions);
-            mini.get('data-accesses-grid').setData(response.result.dataAccess);
+            // mini.get('data-accesses-grid').setData(response.result.dataAccess);
             $(response.result.optionalFields).each(function () {
                 this.actions = this.actions + "";
             });
@@ -88,7 +88,7 @@ function getDataAndValidate() {
     var data = form.getData();
     data.actions = mini.get('action-grid').getData();
 
-    data.dataAccess = mini.get('data-accesses-grid').getData();
+    // data.dataAccess = mini.get('data-accesses-grid').getData();
     data.optionalFields = mini.clone(mini.get('field-accesses-grid').getData());
     $(data.optionalFields).each(function () {
         if (this.actions)
@@ -155,18 +155,18 @@ boot.loadMiniui(function () {
             }
         }
     });
-    mini.get("data-accesses-grid").setData([{}]);
-    boot.initGrid(mini.get("data-accesses-grid"));
+    // mini.get("data-accesses-grid").setData([{}]);
+    // boot.initGrid(mini.get("data-accesses-grid"));
     boot.initGrid(mini.get("field-accesses-grid"));
-    initDataAccessEditor(mini.get('data-accesses-grid'));
+    // initDataAccessEditor(mini.get('data-accesses-grid'));
     mini.get("tabs").on("activechanged", function (e) {
-        var action_editor = mini.get("action_editor"),
-            action_editor_2 = mini.get("action_editor_2");
-        window.action_editor_data = mini.get('action-grid').getData();
-        if (action_editor)
-            action_editor.setData(window.action_editor_data);
-        if (action_editor_2)
-            action_editor_2.setData(window.action_editor_data);
+        // var action_editor = mini.get("action_editor"),
+        //     action_editor_2 = mini.get("action_editor_2");
+        // window.action_editor_data = mini.get('action-grid').getData();
+        // if (action_editor)
+        //     action_editor.setData(window.action_editor_data);
+        // if (action_editor_2)
+        //     action_editor_2.setData(window.action_editor_data);
     });
 
     var api = "permission";

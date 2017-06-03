@@ -72,34 +72,34 @@
                 </div>
             </div>
         </div>
-        <div title="数据权限" style="display: none">
-            <div class="mini-fit">
-                <div id="data-accesses-grid" class="mini-datagrid" style="width:100%;height:100%;margin: auto;"
-                     idField="action" allowCellEdit="true" allowCellSelect="true" showPager="false"
-                     editNextOnEnterKey="true" editNextRowCell="true" navEditMode="true">
-                    <div property="columns">
-                        <div name="action" field="action" headerAlign="center" align="center" width="80">操作类型
-                            <input id="action_editor" data="action_editor_data" textField="action" valueField="action"
-                                   property="editor" class="mini-combobox"/>
-                        </div>
-                        <div field="type" renderer="renderDataAccessedType" width="100" headerAlign="center"
-                             align="center">配置方式
-                            <input property="editor" data="dataAccessesType" class="mini-combobox"/>
-                        </div>
-                        <div field="config" width="120" headerAlign="center" align="center">配置内容
-                            <!--<input property="editor" onbuttonclick="openScript" class="mini-buttonedit"/>-->
-                        </div>
-                        <div field="describe" width="100" headerAlign="center" align="center">描述
-                            <input property="editor" class="mini-textarea"/>
-                        </div>
-                        <div renderer="renderAction" width="40" headerAlign="center" align="center">
-                            操作<span class="title-button icon-add"
-                                    onclick="mini.get('data-accesses-grid').addRow({})"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--<div title="数据权限" style="display: none">-->
+            <!--<div class="mini-fit">-->
+                <!--<div id="data-accesses-grid" class="mini-datagrid" style="width:100%;height:100%;margin: auto;"-->
+                     <!--idField="action" allowCellEdit="true" allowCellSelect="true" showPager="false"-->
+                     <!--editNextOnEnterKey="true" editNextRowCell="true" navEditMode="true">-->
+                    <!--<div property="columns">-->
+                        <!--<div name="action" field="action" headerAlign="center" align="center" width="80">操作类型-->
+                            <!--<input id="action_editor" data="action_editor_data" textField="action" valueField="action"-->
+                                   <!--property="editor" class="mini-combobox"/>-->
+                        <!--</div>-->
+                        <!--<div field="type" renderer="renderDataAccessedType" width="100" headerAlign="center"-->
+                             <!--align="center">配置方式-->
+                            <!--<input property="editor" data="dataAccessesType" class="mini-combobox"/>-->
+                        <!--</div>-->
+                        <!--<div field="config" width="120" headerAlign="center" align="center">配置内容-->
+                            <!--&lt;!&ndash;<input property="editor" onbuttonclick="openScript" class="mini-buttonedit"/>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div field="describe" width="100" headerAlign="center" align="center">描述-->
+                            <!--<input property="editor" class="mini-textarea"/>-->
+                        <!--</div>-->
+                        <!--<div renderer="renderAction" width="40" headerAlign="center" align="center">-->
+                            <!--操作<span class="title-button icon-add"-->
+                                    <!--onclick="mini.get('data-accesses-grid').addRow({})"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
     <div id="scriptEditorWindow" class="mini-window" title="脚本编辑器" style="width:600px;height:500px;"
