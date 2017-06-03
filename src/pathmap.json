@@ -1,0 +1,5 @@
+{
+  "request":"src/commons/request.js",
+  "boot":"src/boot.js",
+  "common":"src/commons/"
+}
