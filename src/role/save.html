@@ -69,17 +69,12 @@
 
     <div id="dataAccessWindow" class="mini-window" title="数据权限配置" style="width:80%;height:80%;"
          showMaxButton="true" showCollapseButton="true" showShadow="true"
-         showToolbar="true" showFooter="false" showModal="false" allowResize="true" allowDrag="true">
-        <div property="toolbar" style="padding:5px;">
+         showToolbar="false" showFooter="true" showModal="false" allowResize="true" allowDrag="true">
+        <div property="footer" style="padding:0px;">
             <a class="mini-button data-access-edit-ok" plain="true" iconCls="icon-ok">完成编辑</a>
         </div>
         <table id="data-access-form" style="width: 100%;margin: auto">
-
             <span style="font-size: 14px">只能[<span class="action_box"></span>]自己创建的数据</span>
-            <br>
-            <span style="font-size: 14px">只能[<span class="action_box"></span>]自己部门的数据</span>
-            <br>
-            <span style="font-size: 14px">只能[<span class="action_box"></span>]自己机构的数据</span>
             <br>
             <a class="mini-button" onclick="mini.get('deny_fields_grid').addRow({})" iconCls="icon-add" plain="true">不能操作的字段</a>
             <br>

@@ -7,7 +7,7 @@ window.renderStatus = function (e) {
     return e.value   ? "是" : "否";
 }
 function edit(id) {
-    boot.openWindow("role/save.html?id=" + id, "编辑权限信息", "80%", "80%", function (e) {
+    boot.openWindow("role/save.html?id=" + id, "编辑角色", "80%", "80%", function (e) {
         grid.reload();
     })
 }

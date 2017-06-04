@@ -135,7 +135,10 @@ function getDataAndValidate() {
         return;
     }
     var data = form.getData();
-    data.permissions = mini.get('action-grid').getData();
+    data.permissions = mini.clone(mini.get('action-grid').getData());
+    $(data.permissions).each(function () {
+        this.actions = this.actions.split(",");
+    })
     // data.dataAccess = mini.get('data-accesses-grid').getData();
     // data.optionalFields = mini.clone(mini.get('field-accesses-grid').getData());
     // $(data.optionalFields).each(function () {
@@ -168,12 +171,19 @@ function initActionsEditor(grid) {
             }
             var own_create_html = {};
             $(row.actions.split(",")).each(function () {
+                var action = permission.actionsMap[this];
+                if (!action)return;
                 own_create_html[this] = $("<span style='cursor: pointer'></span>");
-                var box = $("<input type='checkbox' name='own_create_box'>").val(this);
-                own_create_html[this].append(box)
+                var box = $("<input type='checkbox' name='own_create_box'>").val(this)
+                    .attr("describe", action.describe ? ("只能" + action.describe + "自己创建的数据") : "");
+                own_create_html[this]
+                    .append(box)
                     .append(
                         $("<span>")
-                            .text(permission.actionsMap[this].describe));
+                            .text(action.describe ? action.describe : action.action)
+                            .on("click", function () {
+                                box.prop("checked", !box.prop("checked"))
+                            }));
             });
 
             window.permission_actions = permission ? permission.optionalFields : [];
@@ -185,7 +195,7 @@ function initActionsEditor(grid) {
             var gridData = [];
 
             $(mini.clone(row.dataAccesses)).each(function () {
-                if (this.type == "ALLOW_FIELDS") {
+                if (this.type == "DENY_FIELDS") {
                     this.config = mini.decode(this.config);
                     this.config.fields = this.config.fields + "";
                     this.permissionId = row.permissionId;
@@ -203,9 +213,24 @@ function initActionsEditor(grid) {
                     $(this).append(own_create_html[action].clone());
                 });
             }
-
             mini.get("deny_fields_grid").setData(gridData);
 
+            window.onDataAccessEditAfter = function () {
+                var all_config = [];
+                $("[name=own_create_box]:checked").each(function () {
+                    all_config.push({describe: $(this).attr("describe"), action: $(this).val(), type: "OWN_CREATED"});
+                });
+                var deny_fields = mini.clone(mini.get("deny_fields_grid").getData());
+                $(deny_fields).each(function () {
+                    this.type = "DENY_FIELDS";
+                    this.config = mini.encode(this.config);
+                    if (this.action) {
+                        all_config.push(this);
+                    }
+                });
+                grid.updateRow(row, {dataAccesses: all_config});
+                mini.get("dataAccessWindow").hide();
+            }
             mini.get("dataAccessWindow").show();
         }
     });
@@ -220,6 +245,7 @@ function initActionsEditor(grid) {
         }
     });
 }
+
 boot.loadMiniui(function () {
     mini.parse();
     mini.getbyName("id").on("validation", function (e) {
@@ -262,4 +288,7 @@ boot.loadMiniui(function () {
         })
     }));
 
+    $(".data-access-edit-ok").on("click", function () {
+        window.onDataAccessEditAfter();
+    });
 });
