@@ -270,5 +270,13 @@ module.exports = {
             hide: hide
         };
     },
-    getCookie: getCookie
+    getCookie: getCookie,
+    getFormData:function (formEl,validate) {
+        var form = new mini.Form(formEl);
+        form.validate();
+        if (validate&&form.isValid() == false) {
+            return;
+        }
+        return form.getData();
+    }
 }

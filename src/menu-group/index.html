@@ -15,16 +15,17 @@
                     <tr>
                         <td>搜索:<input name="keyword" emptyText="输入关键字,按回车." class="mini-textbox"/></td>
                         <td><a class="mini-button add-root-group" iconCls="icon-add" title="添加分组" plain="true"></a></td>
-                        <td><a class="mini-button add-root-group" iconCls="icon-save" title="保存全部" plain="true"></a></td>
+                        <td><a class="mini-button save-all-root-group" iconCls="icon-save" title="保存全部"
+                               plain="true"></a></td>
                     </tr>
                 </table>
             </div>
             <ul id="group-tree" class="mini-tree" style="width:100%;padding:0px;"
                 showTreeIcon="true" textField="name" idField="id" parentField="parentId" resultAsTree="false"
-                expandOnNodeClick="false" allowDrag="true" allowDrop="true"  allowLeafDropIn="true"
-                contextMenu="#treeMenu" expandOnLoad="true"  >
+                expandOnNodeClick="false" allowDrag="true" allowDrop="true" allowLeafDropIn="true"
+                contextMenu="#treeMenu" expandOnLoad="true">
             </ul>
-            <ul id="treeMenu" class="mini-contextmenu"  onbeforeopen="onBeforeOpen">
+            <ul id="treeMenu" class="mini-contextmenu" onbeforeopen="onBeforeOpen">
                 <li iconCls="icon-add add-group">添加分组</li>
                 <li iconCls="icon-copy copy-group">复制</li>
             </ul>
@@ -34,7 +35,8 @@
                 <tr>
                     <td class="label">分组标识(ID):</td>
                     <td>
-                        <input required emptyText="只能由字母数字下划线组成,将自动和角色关联" style="width: 100%" name="id" class="mini-textbox"/>
+                        <input required emptyText="只能由字母数字下划线组成,将自动和角色关联" style="width: 100%" name="id"
+                               class="mini-textbox"/>
                     </td>
                     <td class="label">分组名称:</td>
                     <td>
@@ -56,31 +58,36 @@
             </table>
             <div class="mini-fit">
                 <div class="mini-splitter" style="width:100%;height:100%;">
-                    <div  showCollapseButton="true">
+                    <div showCollapseButton="true">
                         <div id="menu-group-grid" class="mini-treegrid" style="width:100%;height:100%;margin: auto;"
                              idField="id" parentField="parentId" resultAsTree="false"
                              iconField="icon" allowCellValid="true"
-                             allowResize="false" expandOnLoad="true"
-                             sortField="sortIndex">
+                             allowResize="false" expandOnLoad="true" treeColumn="icon"
+                             allowCellEdit="true" allowCellSelect="true"
+                             allowDrag="true" allowDrop="true" allowLeafDropIn="true">
                             <div property="columns">
-                                <div field="icon" name="icon" headerAlign="center" align="left" width="60">图标</div>
-                                <div field="name" headerAlign="center" align="center" width="100">菜单名称</div>
+                                <div type="indexcolumn" width="50" align="center" headerAlign="center">#</div>
+                                <div field="menu.icon" name="icon" headerAlign="center" align="left" width="60">图标</div>
+                                <div field="menu.name" headerAlign="center" align="center" width="100">菜单名称</div>
                                 <div field="actions" renderer="renderOperationAction" width="120" headerAlign="center"
                                      align="center">可操作类型
                                     <div property="editor" allowInput="true" valueFromSelect="true" id="actionsBox"
                                          class="mini-combobox" style="width:100%;"
-                                         popupWidth="100%" textField="describe" valueField="action" multiSelect="true">
+                                         popupWidth="250px" textField="describe" valueField="action" multiSelect="true">
                                         <div property="columns">
                                             <div header="类型" field="action"></div>
                                             <div header="说明" field="describe"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div field="dataAccesses" renderer="renderDataAccess" width="120" headerAlign="center" align="left">
+                                <div field="dataAccesses" renderer="renderDataAccess" width="120" headerAlign="center"
+                                     align="left">
                                     数据权限控制
                                 </div>
-                                <div field="describe" width="120" headerAlign="center" align="center">描述</div>
-                                <div renderer="renderAction" width="80" headerAlign="center" align="center">
+                                <div field="describe" width="120" headerAlign="center" align="center">描述
+                                    <input property="editor" class="mini-textarea"/>
+                                </div>
+                                <div renderer="renderBindInfoAction" width="80" headerAlign="center" align="center">
                                     操作
                                 </div>
                             </div>
@@ -106,6 +113,49 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="dataAccessWindow" class="mini-window" title="数据权限配置" style="width:80%;height:80%;"
+     showMaxButton="true" showCollapseButton="true" showShadow="true"
+     showToolbar="false" showFooter="true" showModal="false" allowResize="true" allowDrag="true">
+    <div property="footer" style="padding:0px;">
+        <a class="mini-button data-access-edit-ok" plain="true" iconCls="icon-ok">完成编辑</a>
+    </div>
+    <table id="data-access-form" style="width: 100%;margin: auto">
+        <span style="font-size: 14px">只能[<span class="action_box"></span>]自己创建的数据</span>
+        <br>
+        <a class="mini-button" onclick="mini.get('deny_fields_grid').addRow({})" iconCls="icon-add"
+           plain="true">不能操作的字段</a>
+        <br>
+        <div id="deny_fields_grid" class="mini-datagrid" style="width:100%;height:300px;margin: auto;"
+             allowCellEdit="true" idField="field" allowCellSelect="true" showPager="false"
+             editNextOnEnterKey="true" editNextRowCell="true" navEditMode="true">
+            <div property="columns">
+                <div field="action" headerAlign="center" align="center" width="80">
+                    操作类型
+                    <input property="editor" id="denyOptionAction" allowInput="true" valueField="action" textField="describe"
+                           data="window.deny_option_fields" class="mini-combobox"/>
+                </div>
+                <div field="describe" headerAlign="center" align="center" width="100">
+                    说明
+                    <input property="editor" class="mini-textbox"/>
+                </div>
+                <div field="config.fields" renderer="renderFields" width="200" headerAlign="center"
+                     align="center">字段
+                    <div property="editor" data="permission_actions" allowInput="true"
+                         valueFromSelect="true" id="denyActionsBox"
+                         class="mini-combobox" style="width:100%;"
+                         popupWidth="100%" textField="describe" valueField="name" multiSelect="true">
+                        <div property="columns">
+                            <div header="字段" field="name"></div>
+                            <div header="说明" field="describe"></div>
+                        </div>
+                    </div>
+                </div>
+                <div renderer="renderAction" headerAlign="center" align="center" width="80">操作
+                </div>
+            </div>
+        </div>
 </div>
 
 </body>
